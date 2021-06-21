@@ -24,76 +24,66 @@ class MainActivity : AppCompatActivity() {
         setPieChart()
     }
 
-   private fun setPieChart() {
-      //Setup pie Entries
+    private fun setPieChart() {
+        //Setup pie Entries
 
 
-       val pieEntries = arrayListOf<PieEntry>()
-       pieEntries.add(PieEntry(30.0f , "Android" ))
-       pieEntries.add(PieEntry(40.0f, "Flutter"))
-       pieEntries.add(PieEntry(35.0f, "Java"))
-       pieEntries.add(PieEntry(50.0f, "Fullstack"))
-       pieEntries.add(PieEntry(10.0f, "Outras Trilhas"))
+        val pieEntries = arrayListOf<PieEntry>()
+        pieEntries.add(PieEntry(30.0f, "Android"))
+        pieEntries.add(PieEntry(40.0f, "Flutter"))
+        pieEntries.add(PieEntry(35.0f, "Java"))
+        pieEntries.add(PieEntry(50.0f, "Fullstack"))
+        pieEntries.add(PieEntry(10.0f, "Outras Trilhas"))
 
 
+        //Setup Pie Chart Animation
+        pieChart.animateXY(1000, 1000)
+
+        val colors = ArrayList<Int>()
+        for (color in ColorTemplate.MATERIAL_COLORS) {
+            colors.add(color)
+        }
+
+        for (color in ColorTemplate.VORDIPLOM_COLORS) {
+            colors.add(color)
+        }
+
+        //setup value format
 
 
-
-       //Setup Pie Chart Animation
-       pieChart.animateXY(1000,1000)
-
-       val colors = ArrayList<Int>()
-       for (color in ColorTemplate.MATERIAL_COLORS){
-           colors.add(color)
-       }
-
-       for (color in ColorTemplate.VORDIPLOM_COLORS){
-           colors.add(color)
-       }
-
-       //setup value format
+        //Setup Piechart Entries Colers
+        val pieDataSet = PieDataSet(pieEntries, "Insiders")
+        pieDataSet.valueTextSize = 10f
+        pieDataSet.valueTextColor = R.color.blue
+        pieDataSet.colors = colors
 
 
-       //Setup Piechart Entries Colers
-       val pieDataSet = PieDataSet(pieEntries, "Insiders")
-       pieDataSet.valueTextSize = 10f
-       pieDataSet.valueTextColor = R.color.blue
-       pieDataSet.colors = colors
+        //Now setup text in PieChart Center
+        pieChart.centerText = "Insiders"
+        pieChart.setUsePercentValues(true)
+        pieChart.setCenterTextColor(resources.getColor(R.color.black))
+        pieChart.setCenterTextSize(15f)
+        pieChart.setEntryLabelTextSize(8f)
+
+        // Set Pie Data Set in PieData
+
+        val pieData = PieData(pieDataSet)
+
+        pieData.setValueFormatter(PercentFormatter(pieChart))
 
 
+        // Now Lets Hide the PieChar Entries Tags
+        pieChart.legend.isEnabled = false
+
+        //Now Hide the description of pieChart
+        pieChart.description.isEnabled = false
+        pieChart.holeRadius = 80f
 
 
-       //Now setup text in PieChart Center
-       pieChart.centerText =  "Insiders"
-       pieChart.setUsePercentValues(true)
-       pieChart.setCenterTextColor(resources.getColor(R.color.black))
-       pieChart.setCenterTextSize(15f)
-       pieChart.setEntryLabelTextSize(8f)
-
-       // Set Pie Data Set in PieData
-
-       val pieData = PieData(pieDataSet)
-
-       pieData.setValueFormatter(PercentFormatter(pieChart))
-
-
-
-
-
-
-       // Now Lets Hide the PieChar Entries Tags
-       pieChart.legend.isEnabled = false
-
-       //Now Hide the description of pieChart
-       pieChart.description.isEnabled = false
-
-
-       //This enabled the on each pieEntry
-       pieData.setDrawValues(true)
-       pieChart.data = pieData
+        //This enabled the on each pieEntry
+        pieData.setDrawValues(true)
+        pieChart.data = pieData
     }
-
-
 
 
 }
